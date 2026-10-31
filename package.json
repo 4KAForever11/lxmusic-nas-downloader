@@ -1,0 +1,57 @@
+{
+  "name": "lxmusic-nas-downloader",
+  "version": "0.6.3",
+  "private": true,
+  "description": "Local-first music source and FNOS upload desktop utility",
+  "author": "LX Music NAS Downloader",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "concurrently -k \"vite --host 127.0.0.1\" \"wait-on http://127.0.0.1:5173 && electron .\"",
+    "build": "vite build",
+    "test": "node --test",
+    "pack": "npm run build && electron-builder --win portable --config.electronDist=node_modules/electron/dist",
+    "dist": "npm run build && electron-builder --win nsis portable --config.electronDist=node_modules/electron/dist"
+  },
+  "dependencies": {
+    "lx-user-api-env": "^0.1.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "latest",
+    "concurrently": "^9.1.2",
+    "electron": "latest",
+    "electron-builder": "latest",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vite": "latest",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "cn.lxmusic.nasdownloader",
+    "productName": "落雪音乐下载器",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "lx-music-source-v7.js",
+        "to": "seed/lx-music-source-v7.js"
+      }
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "artifactName": "落雪音乐下载器-${version}-便携版.exe"
+    },
+    "portable": {
+      "artifactName": "落雪音乐下载器-${version}-便携版.exe"
+    }
+  }
+}
