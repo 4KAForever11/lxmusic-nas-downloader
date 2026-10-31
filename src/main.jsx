@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Archive, ArrowDownToLine, Check, ChevronDown, CircleHelp, CloudUpload, FileAudio2, FileCode2, FolderOpen, HardDrive, ListMusic, LoaderCircle, Music2, Plus, RefreshCw, Search, Settings2, ShieldAlert, Trash2, Upload, X } from 'lucide-react'
+import { Archive, ArrowDownToLine, Check, ChevronDown, CircleHelp, CloudUpload, FileAudio2, FileCode2, FolderOpen, Github, HardDrive, ListMusic, LoaderCircle, Music2, Plus, RefreshCw, Search, Settings2, ShieldAlert, Trash2, Upload, X } from 'lucide-react'
 import './style.css'
 
 function App() {
@@ -177,6 +177,14 @@ function App() {
     }
   }
 
+  async function openGithub() {
+    try {
+      await window.desktop.openGithub()
+    } catch {
+      setNotice('无法打开 GitHub 项目主页')
+    }
+  }
+
   async function saveNasSettings() {
     setSettingsBusy(true)
     try {
@@ -228,6 +236,7 @@ function App() {
       <div className="sidebar-bottom">
         <div className="storage-row"><HardDrive size={16} /><span>本机下载位置</span></div>
         <div className="storage-path" title={downloadLocation}>{downloadLocation || '正在读取…'}</div>
+        <button className="github-link" onClick={openGithub} title="打开 GitHub 项目主页"><Github size={15} /><span>GitHub 项目主页</span></button>
         <div className="version-text">版本 {appVersion || '0.6.2'}</div>
       </div>
     </aside>

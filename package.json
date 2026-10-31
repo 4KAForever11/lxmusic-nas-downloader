@@ -1,6 +1,6 @@
 {
   "name": "lxmusic-nas-downloader",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "private": true,
   "description": "Local-first music source and FNOS upload desktop utility",
   "author": "LX Music NAS Downloader",
@@ -45,10 +45,15 @@
       }
     ],
     "win": {
-      "target": [
-        "portable"
-      ],
-      "artifactName": "落雪音乐下载器-${version}-便携版.exe"
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "artifactName": "落雪音乐下载器-${version}-安装版.exe",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     },
     "portable": {
       "artifactName": "落雪音乐下载器-${version}-便携版.exe"

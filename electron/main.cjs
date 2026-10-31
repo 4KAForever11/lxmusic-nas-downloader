@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain, safeStorage } = require('electron')
+const { app, BrowserWindow, dialog, ipcMain, safeStorage, shell } = require('electron')
 const crypto = require('node:crypto')
 const fs = require('node:fs')
 const path = require('node:path')
@@ -201,6 +201,10 @@ function startDownloadJob(webContents, tracks, { uploadToNas = false } = {}) {
 
 function registerSourceHandlers() {
   ipcMain.handle('app:version', () => app.getVersion())
+  ipcMain.handle('app:open-github', async () => {
+    await shell.openExternal('https://github.com/4KAForever11/lxmusic-nas-downloader')
+    return true
+  })
   ipcMain.handle('downloads:location-load', () => readDownloadDir())
   ipcMain.handle('downloads:location-choose', async () => {
     const result = await dialog.showOpenDialog({

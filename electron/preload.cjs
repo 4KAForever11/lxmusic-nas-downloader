@@ -2,6 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('desktop', {
   getVersion: () => ipcRenderer.invoke('app:version'),
+  openGithub: () => ipcRenderer.invoke('app:open-github'),
   searchTracks: (params) => ipcRenderer.invoke('search:tracks', params),
   loadDownloadLocation: () => ipcRenderer.invoke('downloads:location-load'),
   chooseDownloadLocation: () => ipcRenderer.invoke('downloads:location-choose'),
