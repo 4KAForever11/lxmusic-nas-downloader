@@ -1,6 +1,6 @@
 {
   "name": "lxmusic-nas-downloader",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "private": true,
   "description": "Local-first music source and FNOS upload desktop utility",
   "author": "LX Music NAS Downloader",
@@ -42,6 +42,10 @@
       {
         "from": "lx-music-source-v7.js",
         "to": "seed/lx-music-source-v7.js"
+      },
+      {
+        "from": "fallback-sources",
+        "to": "fallback-sources"
       }
     ],
     "win": {

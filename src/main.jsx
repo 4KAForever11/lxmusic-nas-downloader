@@ -237,7 +237,7 @@ function App() {
         <div className="storage-row"><HardDrive size={16} /><span>本机下载位置</span></div>
         <div className="storage-path" title={downloadLocation}>{downloadLocation || '正在读取…'}</div>
         <button className="github-link" onClick={openGithub} title="打开 GitHub 项目主页"><Github size={15} /><span>GitHub 项目主页</span></button>
-        <div className="version-text">版本 {appVersion || '0.6.2'}</div>
+        <div className="version-text">版本 {appVersion || '0.6.5'}</div>
       </div>
     </aside>
 

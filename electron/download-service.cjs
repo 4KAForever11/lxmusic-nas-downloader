@@ -47,16 +47,24 @@ function toProviderParams(track) {
   }
 }
 
-async function resolveMusicUrl(api, track) {
-  const response = await api.resolve(toProviderParams(track))
-  if (!response?.success) {
-    const error = response?.error instanceof Error ? response.error : new Error(String(response?.error || '音乐源未返回直链'))
-    throw error
+async function resolveMusicUrl(api, track, fallbackApis = []) {
+  let lastError
+  for (const resolver of [api, ...fallbackApis].filter(Boolean)) {
+    try {
+      const response = await resolver.resolve(toProviderParams(track))
+      if (!response?.success) {
+        lastError = response?.error instanceof Error ? response.error : new Error(String(response?.error || '音乐源未返回直链'))
+        continue
+      }
+      const value = response.result
+      const url = typeof value === 'string' ? value : value?.url
+      if (typeof url === 'string' && /^https?:\/\//i.test(url)) return url
+      lastError = new Error('音乐源返回了无效的音频地址')
+    } catch (error) {
+      lastError = error
+    }
   }
-  const value = response.result
-  const url = typeof value === 'string' ? value : value?.url
-  if (typeof url !== 'string' || !/^https?:\/\//i.test(url)) throw new Error('音乐源返回了无效的音频地址')
-  return url
+  throw lastError || new Error('音乐源未返回直链')
 }
 
 async function writeResponseToFile(response, destination, signal, onProgress) {
@@ -92,13 +100,13 @@ async function writeResponseToFile(response, destination, signal, onProgress) {
   }
 }
 
-async function downloadTrack({ api, track, outDir, signal, onProgress, onResolvedUrl, initialUrl, maxAttempts = 3 }) {
+async function downloadTrack({ api, fallbackApis = [], track, outDir, signal, onProgress, onResolvedUrl, initialUrl, maxAttempts = 3 }) {
   const base = sanitizeFileName(track.singer ? `${track.singer} - ${track.name}` : track.name || track.songmid)
   const destination = await uniqueDestination(outDir, base, extensionForQuality(track.quality))
   let lastError
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      const url = attempt === 1 && initialUrl ? initialUrl : await resolveMusicUrl(api, track)
+      const url = attempt === 1 && initialUrl ? initialUrl : await resolveMusicUrl(api, track, fallbackApis)
       onResolvedUrl?.(url, { attempt })
       const response = await fetch(url, { redirect: 'follow', signal })
       if (!response.ok) throw new Error(`音频下载 HTTP ${response.status}`)

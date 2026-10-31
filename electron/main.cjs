@@ -16,8 +16,12 @@ const downloadLocationPath = () => path.join(app.getPath('userData'), 'download-
 const seedPath = () => isDev
   ? path.join(app.getAppPath(), 'lx-music-source-v7.js')
   : path.join(process.resourcesPath, 'seed', 'lx-music-source-v7.js')
+const fallbackSourcesDir = () => isDev
+  ? path.join(app.getAppPath(), 'fallback-sources')
+  : path.join(process.resourcesPath, 'fallback-sources')
 const fnosSettingsPath = () => path.join(app.getPath('userData'), 'fnos-settings.enc')
 let sourceManagerPromise
+let fallbackSourcesPromise
 const sourceApis = new Map()
 const downloadJobs = new Map()
 const activeRelays = new Set()
@@ -121,6 +125,34 @@ async function getSourceApi(sourceId) {
   return api
 }
 
+async function getFallbackSourceApis() {
+  if (!fs.existsSync(fallbackSourcesDir())) return []
+  if (!fallbackSourcesPromise) {
+    fallbackSourcesPromise = (async () => {
+      if (!sourceManagerPromise) sourceManagerPromise = import('lx-user-api-env').then(({ WorkerUserApiManager }) => new WorkerUserApiManager('dedicated'))
+      const manager = await sourceManagerPromise
+      const files = fs.readdirSync(fallbackSourcesDir()).filter((file) => file.endsWith('.js')).sort()
+      const apis = []
+      for (const file of files) {
+        let initError
+        const api = manager.load(fs.readFileSync(path.join(fallbackSourcesDir(), file), 'utf8'), {
+          onInitError: (error) => { initError = error },
+          onRunError: (error) => { console.error(`fallback music source worker error (${file})`, error) }
+        }, { env: 'desktop', version: '2.0.0', timeout: 30000 })
+        await api.waitInit()
+        if (api.isInited && !api.isInitError && !initError) apis.push(api)
+        else api.destroy()
+      }
+      return apis
+    })().catch((error) => {
+      fallbackSourcesPromise = null
+      console.warn('fallback music source unavailable', error)
+      return []
+    })
+  }
+  return fallbackSourcesPromise
+}
+
 function sendDownloadEvent(webContents, payload) {
   if (!webContents.isDestroyed()) webContents.send('downloads:event', payload)
 }
@@ -145,8 +177,10 @@ function startDownloadJob(webContents, tracks, { uploadToNas = false } = {}) {
         if (!uploadToNas && (!filePath || !fs.existsSync(filePath))) {
           sendDownloadEvent(webContents, { jobId, type: 'started', trackId: track.id, index, total: tracks.length })
           const api = await getSourceApi(track.sourceScriptId)
+          const fallbackApis = await getFallbackSourceApis()
           filePath = await downloadTrack({
             api,
+            fallbackApis,
             track,
             outDir,
             signal: controller.signal,
