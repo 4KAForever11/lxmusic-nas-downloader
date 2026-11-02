@@ -1,6 +1,6 @@
 {
   "name": "lxmusic-nas-downloader",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "private": true,
   "description": "Local-first music source and FNOS upload desktop utility",
   "author": "LX Music NAS Downloader",
