@@ -11,7 +11,7 @@ const { createLanFileRelay } = require('./lan-relay.cjs')
 const isDev = !app.isPackaged
 const sourceDir = () => path.join(app.getPath('userData'), 'sources')
 const manifestPath = () => path.join(sourceDir(), 'sources.json')
-const defaultDownloadDir = () => path.join(app.getPath('downloads'), '落雪音乐下载器')
+const defaultDownloadDir = () => path.join(app.getPath('downloads'), '洛雪音乐下载器')
 const downloadLocationPath = () => path.join(app.getPath('userData'), 'download-location.json')
 const seedPath = () => isDev
   ? path.join(app.getAppPath(), 'lx-music-source-v7.js')
@@ -308,7 +308,7 @@ function createWindow() {
     minWidth: 980,
     minHeight: 680,
     backgroundColor: '#f4f6f4',
-    title: '落雪音乐下载器',
+    title: '洛雪音乐下载器',
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,

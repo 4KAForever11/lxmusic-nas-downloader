@@ -28,7 +28,7 @@
   },
   "build": {
     "appId": "cn.lxmusic.nasdownloader",
-    "productName": "落雪音乐下载器",
+    "productName": "洛雪音乐下载器",
     "asar": true,
     "directories": {
       "output": "release"
@@ -52,7 +52,7 @@
       "target": ["nsis", "portable"]
     },
     "nsis": {
-      "artifactName": "落雪音乐下载器-${version}-安装版.exe",
+      "artifactName": "洛雪音乐下载器-${version}-安装版.exe",
       "oneClick": false,
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
@@ -60,7 +60,7 @@
       "createStartMenuShortcut": true
     },
     "portable": {
-      "artifactName": "落雪音乐下载器-${version}-便携版.exe"
+      "artifactName": "洛雪音乐下载器-${version}-便携版.exe"
     }
   }
 }

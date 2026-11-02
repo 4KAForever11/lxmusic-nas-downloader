@@ -226,7 +226,7 @@ function App() {
 
   return <div className="app-shell">
     <aside className="sidebar">
-      <div className="brand"><span className="brand-mark"><Music2 size={19} /></span><span>落雪音乐下载器</span></div>
+      <div className="brand"><span className="brand-mark"><Music2 size={19} /></span><span>洛雪音乐下载器</span></div>
       <div className="workspace-label">本地工作区</div>
       <nav aria-label="主导航">
         {nav.map(({ id, label, Icon }) => <button key={id} className={`nav-item ${page === id ? 'active' : ''}`} onClick={() => setPage(id)}>
