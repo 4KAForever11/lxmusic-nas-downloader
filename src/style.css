@@ -231,6 +231,13 @@ html[data-theme="light"] .provider-tabs button { color: #67817d; }
 html[data-theme="light"] .provider-tabs button.selected { color: #2b8068; border-color: #2b8068; }
 html[data-theme="light"] .results-heading h1, html[data-theme="light"] .panel-heading h2, html[data-theme="light"] .settings-label h2, html[data-theme="light"] .search-track strong, html[data-theme="light"] .track-title strong, html[data-theme="light"] .path-row strong { color: #1e2a28; }
 html[data-theme="light"] .search-track small, html[data-theme="light"] .track-title small, html[data-theme="light"] .album-cell, html[data-theme="light"] .duration-cell, html[data-theme="light"] .provider-mark, html[data-theme="light"] .source-name span, html[data-theme="light"] .source-details > span, html[data-theme="light"] .source-details small { color: #67817d; }
+html[data-theme="light"] .page-heading h1, html[data-theme="light"] .source-details strong, html[data-theme="light"] .source-name strong, html[data-theme="light"] .empty-state strong { color: #1e2a28; }
+html[data-theme="light"] .empty-state, html[data-theme="light"] .empty-state span, html[data-theme="light"] .inline-empty, html[data-theme="light"] .queue-footer, html[data-theme="light"] .info-line { color: #67817d; }
+html[data-theme="light"] .destination-path { color: #1e2a28; }
+html[data-theme="light"] .settings-panel label { color: #344d47; }
+html[data-theme="light"] .source-safety strong, html[data-theme="light"] .fnos-transfer-note strong { color: #244239; }
+html[data-theme="light"] .source-safety span, html[data-theme="light"] .fnos-transfer-note span { color: #55736b; }
+html[data-theme="light"] .source-safety > svg, html[data-theme="light"] .fnos-transfer-note > svg { color: #2b8068; }
 html[data-theme="light"] .button-primary { background: #2b8068; color: #fff; }
 html[data-theme="light"] .button-primary:hover:not(:disabled) { background: #246b57; }
 html[data-theme="light"] .button-secondary, html[data-theme="light"] .button-add-result { background: #f5faf7; border-color: #cbdcd5; color: #244239; }
