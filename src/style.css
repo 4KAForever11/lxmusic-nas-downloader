@@ -21,6 +21,10 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px s
 .github-link { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 13px 23px; padding: 0; border: 0; background: transparent; color: #87a8ab; font-size: 11px; }
 .github-link:hover { color: #a8e5c9; text-decoration: underline; }
 .version-text { color: #87a8ab; font-size: 11px; }
+.sidebar-footer-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.theme-switch { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border: 1px solid #203c46; border-radius: 8px; background: #10242c; }
+.theme-button { width: 24px; height: 22px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 5px; background: transparent; color: #87a8ab; }
+.theme-button:hover, .theme-button.active { background: #203c46; color: #a8e5c9; }
 .main-area { min-width: 0; }
 .topbar { height: 56px; display: flex; justify-content: space-between; align-items: center; padding: 0 29px; border-bottom: 1px solid #203c46; color: #87a8ab; font-size: 12px; }
 .crumb span { padding: 0 8px; color: #4e6a70; }
@@ -205,3 +209,38 @@ tr:hover .row-delete, .row-delete:focus-visible { visibility: visible; }
 .toast > svg { color: #a8e5c9; }
 .toast button { width: 23px; height: 23px; display: grid; place-items: center; margin-left: 2px; border: 0; background: transparent; color: #87a8ab; }
 @media (max-width: 1080px) { .app-shell { grid-template-columns: 198px minmax(0, 1fr); } .page-content { padding-left: 20px; padding-right: 20px; } .workspace-grid { grid-template-columns: minmax(0, 1.5fr) minmax(245px, .9fr); gap: 12px; } }
+
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="light"] body { background: #f5f8f7; color: #1e2a28; }
+html[data-theme="light"] .sidebar { background: #eef5f2; border-color: #d7e4df; }
+html[data-theme="light"] .brand { color: #1e2a28; }
+html[data-theme="light"] .brand-mark { background: #2b8068; color: #fff; }
+html[data-theme="light"] .workspace-label, html[data-theme="light"] .storage-path, html[data-theme="light"] .version-text { color: #67817d; }
+html[data-theme="light"] .nav-item { color: #607672; }
+html[data-theme="light"] .nav-item:hover, html[data-theme="light"] .nav-item.active { background: #dceee7; color: #27654f; }
+html[data-theme="light"] .nav-count { background: #d2e8df; color: #27654f; }
+html[data-theme="light"] .sidebar-bottom, html[data-theme="light"] .topbar { border-color: #d7e4df; }
+html[data-theme="light"] .topbar, html[data-theme="light"] .crumb, html[data-theme="light"] .page-heading p, html[data-theme="light"] .results-heading p, html[data-theme="light"] .summary-label, html[data-theme="light"] .panel-heading p { color: #67817d; }
+html[data-theme="light"] .prototype-badge { background: #dceee7; color: #27654f; }
+html[data-theme="light"] .prototype-badge > span { background: #2b8068; }
+html[data-theme="light"] .music-search, html[data-theme="light"] .panel, html[data-theme="light"] .summary-strip, html[data-theme="light"] .search-table-wrap { background: #fff; border-color: #d7e4df; }
+html[data-theme="light"] .music-search input, html[data-theme="light"] input, html[data-theme="light"] select { color: #1e2a28; background: #fff; border-color: #cbdcd5; }
+html[data-theme="light"] .music-search input::placeholder, html[data-theme="light"] input::placeholder { color: #8aa09a; }
+html[data-theme="light"] .provider-tabs, html[data-theme="light"] th, html[data-theme="light"] td, html[data-theme="light"] .connection-line, html[data-theme="light"] .settings-actions { border-color: #e3ece8; }
+html[data-theme="light"] .provider-tabs button { color: #67817d; }
+html[data-theme="light"] .provider-tabs button.selected { color: #2b8068; border-color: #2b8068; }
+html[data-theme="light"] .results-heading h1, html[data-theme="light"] .panel-heading h2, html[data-theme="light"] .settings-label h2, html[data-theme="light"] .search-track strong, html[data-theme="light"] .track-title strong, html[data-theme="light"] .path-row strong { color: #1e2a28; }
+html[data-theme="light"] .search-track small, html[data-theme="light"] .track-title small, html[data-theme="light"] .album-cell, html[data-theme="light"] .duration-cell, html[data-theme="light"] .provider-mark, html[data-theme="light"] .source-name span, html[data-theme="light"] .source-details > span, html[data-theme="light"] .source-details small { color: #67817d; }
+html[data-theme="light"] .button-primary { background: #2b8068; color: #fff; }
+html[data-theme="light"] .button-primary:hover:not(:disabled) { background: #246b57; }
+html[data-theme="light"] .button-secondary, html[data-theme="light"] .button-add-result { background: #f5faf7; border-color: #cbdcd5; color: #244239; }
+html[data-theme="light"] .button-secondary:hover:not(:disabled), html[data-theme="light"] .button-add-result:hover { background: #e5f3ed; border-color: #8bbdac; color: #27654f; }
+html[data-theme="light"] .search-table tbody tr:hover, html[data-theme="light"] .source-row:hover, html[data-theme="light"] .source-row.selected { background: #f1f8f5; }
+html[data-theme="light"] .track-art, html[data-theme="light"] .source-icon, html[data-theme="light"] .not-run-note, html[data-theme="light"] .source-safety, html[data-theme="light"] .connection-result { background: #edf7f2; color: #2b8068; }
+html[data-theme="light"] .status { background: #edf1ef; color: #607672; }
+html[data-theme="light"] .status-active, html[data-theme="light"] .status-done { background: #dceee7; color: #27654f; }
+html[data-theme="light"] .status-error { background: #f9e4e1; color: #a14e48; }
+html[data-theme="light"] .status-cancelled { background: #eef1ef; color: #788c87; }
+html[data-theme="light"] .theme-switch { background: #fff; border-color: #cbdcd5; }
+html[data-theme="light"] .theme-button { color: #67817d; }
+html[data-theme="light"] .theme-button:hover, html[data-theme="light"] .theme-button.active { background: #dceee7; color: #27654f; }

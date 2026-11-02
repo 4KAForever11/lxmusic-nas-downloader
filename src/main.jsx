@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Archive, ArrowDownToLine, Check, ChevronDown, CircleHelp, CloudUpload, FileAudio2, FileCode2, FolderOpen, Github, HardDrive, ListMusic, LoaderCircle, Music2, Plus, RefreshCw, Search, Settings2, ShieldAlert, Trash2, Upload, X } from 'lucide-react'
+import { Archive, ArrowDownToLine, Check, ChevronDown, CircleHelp, CloudUpload, FileAudio2, FileCode2, FolderOpen, Github, HardDrive, ListMusic, LoaderCircle, Moon, Music2, Plus, RefreshCw, Search, Settings2, ShieldAlert, Sun, Trash2, Upload, X } from 'lucide-react'
 import './style.css'
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
   const [settingsLoaded, setSettingsLoaded] = useState(false)
   const [settingsBusy, setSettingsBusy] = useState(false)
   const [connectionState, setConnectionState] = useState({ kind: 'idle', message: '尚未检测' })
+  const [theme, setTheme] = useState(() => window.localStorage.getItem('lxmusic-theme') || 'dark')
 
   async function refreshSources() {
     const rows = await window.desktop.listSources()
@@ -36,13 +37,21 @@ function App() {
   }
 
   useEffect(() => {
-    refreshSources().catch(() => setLoading(false))
     window.desktop.getVersion().then(setAppVersion).catch(() => {})
-    window.desktop.loadDownloadLocation().then(setDownloadLocation).catch(() => {})
-    window.desktop.loadFnosSettings().then((saved) => {
-      if (saved) setSettings(saved)
-    }).catch((error) => setConnectionState({ kind: 'error', message: error.message || '无法读取已保存设置' })).finally(() => setSettingsLoaded(true))
+    const loadDeferredState = () => {
+      refreshSources().catch(() => setLoading(false))
+      window.desktop.loadDownloadLocation().then(setDownloadLocation).catch(() => {})
+      window.desktop.loadFnosSettings().then((saved) => {
+        if (saved) setSettings(saved)
+      }).catch((error) => setConnectionState({ kind: 'error', message: error.message || '无法读取已保存设置' })).finally(() => setSettingsLoaded(true))
+    }
+    const idle = window.requestIdleCallback ? window.requestIdleCallback(loadDeferredState, { timeout: 400 }) : window.setTimeout(loadDeferredState, 0)
+    return () => window.cancelIdleCallback ? window.cancelIdleCallback(idle) : window.clearTimeout(idle)
   }, [])
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    window.localStorage.setItem('lxmusic-theme', theme)
+  }, [theme])
   useEffect(() => {
     if (!notice) return undefined
     const timer = setTimeout(() => setNotice(''), 3200)
@@ -237,7 +246,7 @@ function App() {
         <div className="storage-row"><HardDrive size={16} /><span>本机下载位置</span></div>
         <div className="storage-path" title={downloadLocation}>{downloadLocation || '正在读取…'}</div>
         <button className="github-link" onClick={openGithub} title="打开 GitHub 项目主页"><Github size={15} /><span>GitHub 项目主页</span></button>
-        <div className="version-text">版本 {appVersion || '0.6.5'}</div>
+        <div className="sidebar-footer-row"><div className="version-text">版本 {appVersion || '0.6.6'}</div><div className="theme-switch" role="group" aria-label="主题模式"><button className={theme === 'light' ? 'theme-button active' : 'theme-button'} onClick={() => setTheme('light')} title="浅色模式" aria-label="浅色模式"><Sun size={13} /></button><button className={theme === 'dark' ? 'theme-button active' : 'theme-button'} onClick={() => setTheme('dark')} title="深色模式" aria-label="深色模式"><Moon size={13} /></button></div></div>
       </div>
     </aside>
 
